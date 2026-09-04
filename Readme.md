@@ -1,8 +1,8 @@
 # Cycle-Accurate Out-of-Order Processor Simulator
 
 A C++ simulator of a dynamically scheduled processor over a RISC-V-style integer subset 
-(add, addi, sub, mulu, divu), modelling the MIPS R10000 style of out-of-order execution, modelling the MIPS R10000 style of
-out-of-order execution: register renaming into a physical register file, an Active List for
+(add, addi, sub, mulu, divu), modelling the MIPS R10000 style of out-of-order execution: 
+register renaming into a physical register file, an Active List for
 in-order commit, and an Integer Queue for wakeup and issue. The simulator reads a program
 as JSON and emits the complete architectural and microarchitectural state after every
 cycle, so execution can be inspected cycle by cycle rather than only at the end.
