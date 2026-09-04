@@ -20,7 +20,7 @@ cycle, so execution can be inspected cycle by cycle rather than only at the end.
 ```bash
 ./build.sh
 ./run.sh <input.json> <output.json>
-./testall.sh              # run and diff the whole test set
+./testall.sh              # run and diff the whole test set provided
 ```
 
 C++17, no dependencies beyond a bundled nlohmann/json.
