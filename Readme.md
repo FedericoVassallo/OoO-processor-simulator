@@ -1,16 +1,30 @@
-# CS-470 Homework 1
+# Cycle-Accurate Out-of-Order Processor Simulator
 
-Federico Vassallo
+A C++ simulator of a dynamically scheduled RISC-V core, modelling the MIPS R10000 style of
+out-of-order execution: register renaming into a physical register file, an Active List for
+in-order commit, and an Integer Queue for wakeup and issue. The simulator reads a program
+as JSON and emits the complete architectural and microarchitectural state after every
+cycle, so execution can be inspected cycle by cycle rather than only at the end.
 
-Source Files (src/): 
+- Implements the full pipeline: fetch and decode, rename and dispatch, issue, execute,
+  and commit, with the register map table, free list and busy-bit table maintained across
+  stages.
+- Handles structural hazards and RAW dependences through the Integer Queue's operand
+  wakeup, so instructions issue only once their physical sources are ready.
+- Implements precise exceptions: on a fault the pipeline is flushed, the rename state is
+  rolled back through the Active List in reverse order, and control transfers to the
+  handler with the architectural state exactly as it was at the faulting instruction.
+- Validated cycle by cycle against reference traces across the full test set.
 
-- main.cpp — Entry point: reads input, runs simulation loop, writes output
-- simulator.cpp — Pipeline stages: fetch, rename/dispatch, issue, execute, commit
-- parser.cpp — Parses instruction strings from input JSON
-- json_output.cpp — Serializes processor state to JSON each cycle
+```bash
+./build.sh
+./run.sh <input.json> <output.json>
+./testall.sh              # run and diff the whole test set
+```
 
-Headers (include/):
+C++17, no dependencies beyond a bundled nlohmann/json.
 
-- structures.h — All data structures (ProcessorState, ActiveList, IntegerQueue, ...)
-- simulator.h / parser.h / json_output.h — Function declarations
-- nlohmann/ — Bundled nlohmann/json header-only library for JSON parsing and output
+---
+
+EPFL CS-470 Advanced Computer Architecture. The test harness and JSON I/O format were
+provided by the course; the simulator is mine.
